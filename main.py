@@ -11,7 +11,7 @@ therapist = eliza.eliza()
 CHANNEL_1 ='nbso98'
 CHANNEL_2 = 'bot_tester_bot'
 USER = 'nbso98'
-AUTHKEY = 'oauth:89p2rs5jcrj7ko2q7px2w2lrc3om3y'
+AUTHKEY = ''
 
 if (AUTHKEY=='UNSET'):
     raise NotImplementedError("this isn't going to work, you need to set your username and authkey")
