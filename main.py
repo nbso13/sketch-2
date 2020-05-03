@@ -2,9 +2,9 @@ from twitchobserver import Observer
 import time
 import threading
 import random
-from textblob import TextBlob
-from textblob import Word
-from textblob.wordnet import VERB
+import eliza
+
+therapist = eliza.eliza()
 
 # change these to be, well, you
 #using 'bot_tester_bot' twitch account, password 'bot_tester_bo'.
@@ -17,21 +17,20 @@ if (AUTHKEY=='UNSET'):
     raise NotImplementedError("this isn't going to work, you need to set your username and authkey")
 
 # your code goes here!
-def message(user):
+def message(reply, user):
     # figure out which channel we're dealing with
     if user == CHANNEL_1:
         ind = 1 #refering to chan2
     else:
         ind = 0 #ref chan1
     if not(chan_replies[ind]): #if empty list
-        #choose a random default reply
-        text = defaultReplies[random.randint(0, len(defaultReplies)-1)]
+        # eliza replies to you directly
+        text = therapist.respond(reply)
+        # defaultReplies[random.randint(0, len(defaultReplies)-1)]
     else:
         #otherwise parse last reply from other chan
-        text = chan_replies[ind].pop()
-        blob = TextBlob(str(text))
-        if blob.noun_phrases:
-            text = "So I was thinking about " + blob.noun_phrases[0] + "."
+        chan_rep = chan_replies[ind].pop()
+        text = therapist.respond(chan_rep)
     return text
 
 # we keep a list of message IDs we've seen before just in case we see them twice
@@ -78,7 +77,7 @@ with observer:
                         chan_ind = 1 #came from first chan
                     # add to appropriate list
                     chan_replies[chan_ind].append(event.message)
-                    reply = message(event.channel)
+                    reply = message(event.message, event.channel)
                     if (reply):
                         observer.send_message(reply, event.channel)
 
