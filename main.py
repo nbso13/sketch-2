@@ -3,8 +3,9 @@ import time
 import threading
 
 # change these to be, well, you
-
-CHANNEL = 'nbso98'
+#using 'bot_tester_bot' twitch account, password 'bot_tester_bo'.
+CHANNEL_1 ='nbso98'
+CHANNEL_2 = 'bot_tester_bot'
 USER = 'nbso98'
 AUTHKEY = 'oauth:89p2rs5jcrj7ko2q7px2w2lrc3om3y'
 
@@ -21,9 +22,15 @@ seenBefore = set()
 print("connecting")
 observer = Observer(USER, AUTHKEY)
 
+
 with observer:
-    print("joining")
-    observer.join_channel(CHANNEL)
+    print("joining C 1")
+    observer.join_channel(CHANNEL_1)
+    print("running in C 1")
+    print("joining C 2")
+    observer.join_channel(CHANNEL_2)
+    print("running in C 2")
+
     print("running")
     try:
         while True:
@@ -42,12 +49,17 @@ with observer:
                             seenBefore.add(event.tags.get("id"))
                 print(event)
                 if event.type == 'TWITCHCHATMESSAGE':
-                    reply = message(event.message, event.channel)
+                    if CHANNEL_1 == event.channel:
+                        new_chan = CHANNEL_2
+                    else:
+                        new_chan = CHANNEL_1
+                    reply = message(event.message, new_chan)
                     if (reply):
-                        observer.send_message(reply, CHANNEL)
+                        observer.send_message(reply, new_chan)
 
             # never post too fast, even in response to messages that arrive. Twitch will block us.
             time.sleep(0.1)
 
     except KeyboardInterrupt:
-        observer.leave_channel(CHANNEL)
+        observer.leave_channel(CHANNEL_1)
+        observer.leave_channel(CHANNEL_2)
