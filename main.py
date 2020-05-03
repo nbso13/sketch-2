@@ -2,13 +2,16 @@ from twitchobserver import Observer
 import time
 import threading
 import random
+from textblob import TextBlob
+from textblob import Word
+from textblob.wordnet import VERB
 
 # change these to be, well, you
 #using 'bot_tester_bot' twitch account, password 'bot_tester_bo'.
-CHANNEL_1 = 
+CHANNEL_1 ='nbso98'
 CHANNEL_2 = 'bot_tester_bot'
-USER = 
-AUTHKEY = 'UNSET'
+USER = 'nbso98'
+AUTHKEY = 'oauth:89p2rs5jcrj7ko2q7px2w2lrc3om3y'
 
 if (AUTHKEY=='UNSET'):
     raise NotImplementedError("this isn't going to work, you need to set your username and authkey")
@@ -24,13 +27,15 @@ def message(user):
         #choose a random default reply
         text = defaultReplies[random.randint(0, len(defaultReplies)-1)]
     else:
-        #otherwise take the last of the replies from the other channel
+        #otherwise parse last reply from other chan
         text = chan_replies[ind].pop()
+        blob = TextBlob(str(text))
+        if blob.noun_phrases:
+            text = "So I was thinking about " + blob.noun_phrases[0] + "."
     return text
 
 # we keep a list of message IDs we've seen before just in case we see them twice
 seenBefore = set()
-
 
 # save replies from each person: first list is chan 1, second is chan 2
 chan_replies = list([list(), list()])
@@ -40,7 +45,6 @@ defaultReplies = list(["Nah fuck YOU.", "Ikr?!", "The odds point to ~maybe~"])
 
 print("connecting")
 observer = Observer(USER, AUTHKEY)
-
 
 with observer:
     print("joining C 1")
