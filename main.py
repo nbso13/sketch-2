@@ -39,7 +39,7 @@ seenBefore = set()
 # save replies from each person: first list is chan 1, second is chan 2 
 # and then congregates all responses in all_replies
 chan_replies = list([list(), list()])
-all_replies = list()
+all_replies = set()
 
 # if you get texted and the other person hasn't said anything, use this
 defaultReplies = list(["Nah fuck YOU.", "Ikr?!", "The odds point to ~maybe~"])
