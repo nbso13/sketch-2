@@ -9,9 +9,9 @@ therapist = eliza.eliza()
 # change these to be, well, you
 #using 'bot_tester_bot' twitch account, password 'bot_tester_bo'.
 CHANNEL_1 ='nbso98'
-CHANNEL_2 = 'bot_tester_bot'
-USER = 'nbso98'
-AUTHKEY = ''
+CHANNEL_2 = 'neha_linga'
+USER = 'b0neb0neb0neb0ne'
+AUTHKEY = 'oauth:wpwvpj72lump8rmzgm180ob1k6d5rv'
 
 if (AUTHKEY=='UNSET'):
     raise NotImplementedError("this isn't going to work, you need to set your username and authkey")
@@ -36,8 +36,10 @@ def message(reply, user):
 # we keep a list of message IDs we've seen before just in case we see them twice
 seenBefore = set()
 
-# save replies from each person: first list is chan 1, second is chan 2
+# save replies from each person: first list is chan 1, second is chan 2 
+# and then congregates all responses in all_replies
 chan_replies = list([list(), list()])
+all_replies = set()
 
 # if you get texted and the other person hasn't said anything, use this
 defaultReplies = list(["Nah fuck YOU.", "Ikr?!", "The odds point to ~maybe~"])
@@ -77,8 +79,11 @@ with observer:
                         chan_ind = 1 #came from first chan
                     # add to appropriate list
                     chan_replies[chan_ind].append(event.message)
+                    # add to master list
+                    all_replies.append(event.message)
                     reply = message(event.message, event.channel)
                     if (reply):
+                        all_replies.append(reply)
                         observer.send_message(reply, event.channel)
 
             # never post too fast, even in response to messages that arrive. Twitch will block us.
