@@ -91,9 +91,11 @@ with observer:
             time.sleep(0.1)
        	    with open('allreplies.txt', 'w') as filehandle:
        	        filehandle.writelines("%s\n" % place for place in all_replies)
-            ##f = open("demofile2.txt", "w")
-            ##f.write(all_replies)
-            ##f.close()    
+
+        while len(all_replies) < 1024:
+            print(len(all_replies))
+            all_replies = all_replies + all_replies
+
     except KeyboardInterrupt:
         observer.leave_channel(CHANNEL_1)
         observer.leave_channel(CHANNEL_2)
