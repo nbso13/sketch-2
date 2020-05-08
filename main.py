@@ -9,9 +9,9 @@ therapist = eliza.eliza()
 
 # change these to be, well, you
 #using 'bot_tester_bot' twitch account, password 'bot_tester_bo'.
-CHANNEL_1 ='neha_linga'
+CHANNEL_1 ='nbso98'
 CHANNEL_2 = 'neha_linga'
-USER = 'neha_linga'
+USER = 'b0neb0neb0neb0ne'
 AUTHKEY = 'oauth:wpwvpj72lump8rmzgm180ob1k6d5rv'
 
 if (AUTHKEY=='UNSET'):
