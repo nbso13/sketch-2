@@ -9,6 +9,7 @@ if not os.path.isdir(os.path.join("models", model_name)):
 
 
 file_name = "allreplies.txt"
+'''
 if not os.path.isfile(file_name):
 	url = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
 	data = requests.get(url)
@@ -16,7 +17,7 @@ if not os.path.isfile(file_name):
 	with open(file_name, 'w') as f:
 		f.write(data.text)
     
-
+'''
 sess = gpt2.start_tf_sess()
 gpt2.finetune(sess,
               file_name,
