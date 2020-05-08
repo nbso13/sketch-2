@@ -3,14 +3,15 @@ import time
 import threading
 import random
 import eliza
+import os
 
 therapist = eliza.eliza()
 
 # change these to be, well, you
 #using 'bot_tester_bot' twitch account, password 'bot_tester_bo'.
-CHANNEL_1 ='nbso98'
+CHANNEL_1 ='neha_linga'
 CHANNEL_2 = 'neha_linga'
-USER = 'b0neb0neb0neb0ne'
+USER = 'neha_linga'
 AUTHKEY = 'oauth:wpwvpj72lump8rmzgm180ob1k6d5rv'
 
 if (AUTHKEY=='UNSET'):
@@ -39,7 +40,7 @@ seenBefore = set()
 # save replies from each person: first list is chan 1, second is chan 2 
 # and then congregates all responses in all_replies
 chan_replies = list([list(), list()])
-all_replies = set()
+all_replies = list()
 
 # if you get texted and the other person hasn't said anything, use this
 defaultReplies = list(["Nah fuck YOU.", "Ikr?!", "The odds point to ~maybe~"])
@@ -85,10 +86,14 @@ with observer:
                     if (reply):
                         all_replies.append(reply)
                         observer.send_message(reply, event.channel)
-
+                                
             # never post too fast, even in response to messages that arrive. Twitch will block us.
             time.sleep(0.1)
-
+       	    with open('allreplies.txt', 'w') as filehandle:
+       	        filehandle.writelines("%s\n" % place for place in all_replies)
+            ##f = open("demofile2.txt", "w")
+            ##f.write(all_replies)
+            ##f.close()    
     except KeyboardInterrupt:
         observer.leave_channel(CHANNEL_1)
         observer.leave_channel(CHANNEL_2)
