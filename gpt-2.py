@@ -1,3 +1,8 @@
+from twitchobserver import Observer
+import time
+import threading
+import random
+import eliza
 import gpt_2_simple as gpt2
 import os
 import requests
@@ -22,6 +27,6 @@ sess = gpt2.start_tf_sess()
 gpt2.finetune(sess,
               file_name,
               model_name=model_name,
-              steps=10)   # steps is max number of training steps
+              steps=3)   # steps is max number of training steps
 
 gpt2.generate(sess)
