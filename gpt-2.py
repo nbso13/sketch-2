@@ -22,6 +22,6 @@ sess = gpt2.start_tf_sess()
 gpt2.finetune(sess,
               file_name,
               model_name=model_name,
-              steps=1000)   # steps is max number of training steps
+              steps=10)   # steps is max number of training steps
 
 gpt2.generate(sess)
