@@ -89,13 +89,12 @@ with observer:
                                 
             # never post too fast, even in response to messages that arrive. Twitch will block us.
             time.sleep(0.1)
-       	    with open('allreplies.txt', 'w') as filehandle:
-       	        filehandle.writelines("%s\n" % place for place in all_replies)
-
-        while len(all_replies) < 1024:
-            print(len(all_replies))
-            all_replies = all_replies + all_replies
 
     except KeyboardInterrupt:
         observer.leave_channel(CHANNEL_1)
         observer.leave_channel(CHANNEL_2)
+
+while len(all_replies) < 1024:
+    all_replies = all_replies + all_replies
+with open('allreplies.txt', 'w') as filehandle:
+    filehandle.writelines("%s\n" % place for place in all_replies)
